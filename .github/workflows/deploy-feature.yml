@@ -1,0 +1,33 @@
+name: Deploy Feature
+
+on:
+  workflow_dispatch: # run this workflow manually
+    inputs:
+      namespace:
+        description: 'Deployment namespace'
+        required: true
+        type: choice
+        options:
+          - dev2
+          - dev3
+          - test2
+          - test3
+        default: 'dev2'
+      tag:
+        description: 'Additional tag for container registry, eg. Jira-Ticket'
+        required: true
+
+jobs:
+
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Deploy Feature Info
+        run: |
+          echo Actor: ${{ github.actor }}
+          echo Branch: ${{ github.ref }}
+          echo Namespace: ${{ github.event.inputs.namespace }}
+          echo Tag: ${{ github.event.inputs.tag }}
